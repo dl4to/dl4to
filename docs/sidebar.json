@@ -1,0 +1,65 @@
+{
+  "DL4TO":
+  {
+    "Overview": "/",
+    "Problem": "problem.html",
+    "Solution": "solution.html",
+    "": {
+    "Criteria": {
+            "Criteria": "criteria.html",
+            "Supervised criteria": "supervised_criteria.html",
+            "Unsupervised Criteria": "unsupervised_criteria.html"
+                },
+    "Topo solvers": {
+        "Topo solver": "topo_solver.html",
+        "SIMP": "simp.html",
+        "Oracle topo solver": "oracle_topo_solver.html",
+        "Trainable topo solver": "trainable_topo_solver.html"
+                },
+    "PDE": {
+        "Linear solvers": "linear_solvers.html",
+        "PDE solver": "pde_solver.html",
+        "FDM solver": "fdm_solver.html"
+                },
+    "Datasets": {
+        "CSV converter": "csv_converter.html",
+        "Topo dataset": "topo_dataset.html",
+        "Basic dataset": "basic_dataset.html",
+        "CSV dataset": "csv_dataset.html",
+        "SELTO dataset": "selto_dataset.html"
+                },
+    "Models": {
+        "Convolutional block": "conv_block.html",
+        "Encoder": "encoder.html",
+        "Decoder": "decoder.html",
+        "UNet": "unet.html",
+        "Deep image prior": "deep_image_prior.html",
+        "Equivariance": "equivariance.html"
+                },
+    "Preprocessing": {
+        "Preprocessing": "preprocessing.html",
+        "Problem preprocessing": "problem_preprocessing.html",
+        "Solution preprocessing": "solution_preprocessing.html"
+                },
+    "Density representers": {
+        "Density filters": "density_filters.html",
+        "Density representer": "density_representer.html",
+        "Filtering density representer": "filtering_density_representer.html",
+        "DIP density representer": "deep_image_prior_density_representer.html"
+                },
+      "Plotting": {
+          "3D plotting": "plotting.html",
+          "Logs plotting": "logs_plotting.html"
+                  }
+        },
+      "Utils": "utils.html"
+  },
+  "Tutorial":
+  {
+    "Overview": "tutorial_overview.html",
+    "Problems and solutions": "tutorial_problems_and_solutions.html",
+    "Datasets and dataloaders": "tutorial_datasets_and_dataloaders.html",
+    "Topo solvers": "tutorial_topo_solvers.html",
+    "Trainable topo solvers": "tutorial_trainable_topo_solvers.html"
+  }
+}
