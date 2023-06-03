@@ -57,15 +57,13 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For any topo solver we need to choose an optimization criterion, i.e., an objective function that for which we want to optimize.</p>
-<p>For example, let's say we want to minimize the volume of a structure. Depending on what our exact goal is, there are three possible criteria for that:</p>
-<ol>
-<li>The volume criterion. This criterion simply sums up all values in the density distribution.</li>
-<li>The volume fraction criterion. This criterion returns the volume of the structure divided by the total number of voxels, i.e. the average density. This has the advantage that it always returns a value between $0$ and $1$.</li>
-<li>The volume constraint criterion. This criterion compares the volume fraction wit a pre-defined maximum volume fraction. If the difference is negative (i.e., the current volume is below the maximum volume fraction) then this criterion returns $0$, otherwise it returns a positive output. The thresholding is done by either a ReLU function, or a Softplus function for more smoothness.</li>
-</ol>
-<p>Our library contains many more criteria that can be used for evaluation or as loss/objective functions. We will refer to some of them in the next tutorial on trainable topo solvers. For now, we will use the volume fraction and the stress constraint criterion for SIMP. The stress constraint criterion has a similar concept like the volume constraint criterion: We compare the current maximal von Mises stress with the yield stress and we get an output $&gt;0$ if the von Mises stress is larger than the yield stress.</p>
-<p>We weight the StressConstraint accordingly. Unfortunately, the SIMP algorithm - like most algorithms - needs some sort of finetuning that is done manually, usually by trial-end-error. We found that a constant of $10^{-11}$ works well for this example.</p>
+<p>For any topo solver we need to choose an optimization criterion, i.e., an objective function that for which we want to optimize. Our library contains many criteria that can be used for evaluation or as loss/objective functions. Generally speaking, we have two different types of criteria: supervised and unsupervised.</p>
+<ul>
+<li>Supervised criteria compare a given solution to a ground truth solution. This for instance contains common loss functions like the "binary cross entropy" (BCE) function as well as many commonly used evaluation criteria for semantic segmentation, like the "Intersection over Union" (IoU) and "Dice". </li>
+<li>Unsupervised criteria don't require a ground truth and evaluates inputs based on their intrinsic properties. This includes criteria for volume, maximal stress and compliance.</li>
+</ul>
+<p>We will use some of the mentioned criteria in this and in the next tutorial on trainable topo solvers.</p>
+<p>For SIMP, we use compliance minimization with a volume constraint:</p>
 
 </div>
 </div>
@@ -77,9 +75,9 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">dl4to.criteria</span> <span class="kn">import</span> <span class="n">VolumeFraction</span><span class="p">,</span> <span class="n">StressConstraint</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">dl4to.criteria</span> <span class="kn">import</span> <span class="n">Compliance</span><span class="p">,</span> <span class="n">VolumeConstraint</span>
 
-<span class="n">criterion</span> <span class="o">=</span> <span class="n">VolumeFraction</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-11</span> <span class="o">*</span> <span class="n">StressConstraint</span><span class="p">(</span><span class="n">threshold_fct</span><span class="o">=</span><span class="s1">&#39;softplus&#39;</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">Compliance</span><span class="p">()</span> <span class="o">+</span> <span class="n">VolumeConstraint</span><span class="p">(</span><span class="n">max_volume_fraction</span><span class="o">=</span><span class="mf">.12</span><span class="p">,</span> <span class="n">threshold_fct</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -91,7 +89,14 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For our TO problem we choose the ledge problem introduced in the last tutorials, and we pass an FDM solver to it:</p>
+<p>Compliance is a very common objective in topology optimization. It is defined as the product of external forces and displacements. The <a href="/dl4tounsupervised_criteria.html#VolumeConstraint"><code>VolumeConstraint</code></a> criterion compares the volume fraction -- i.e., the average voxel density -- wit a pre-defined maximum volume fraction (which in this case is 0.12). If the difference is negative (i.e., the current volume is below the maximum volume fraction) then this criterion returns 0, otherwise it returns a positive output. The thresholding can be done via either a ReLU function or a Softplus function. Both <a href="/dl4tounsupervised_criteria.html#Compliance"><code>Compliance</code></a> and <a href="/dl4tounsupervised_criteria.html#VolumeConstraint"><code>VolumeConstraint</code></a> are unsupervised criteria.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For our TO problem we choose the first sample of the disc complex SELTO dataset and we pass a FDM solver to it:</p>
 
 </div>
 </div>
@@ -103,14 +108,31 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">dl4to.datasets</span> <span class="kn">import</span> <span class="n">BasicDataset</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">dl4to.datasets</span> <span class="kn">import</span> <span class="n">SELTODataset</span>
 <span class="kn">from</span> <span class="nn">dl4to.pde</span> <span class="kn">import</span> <span class="n">FDM</span>
 
-<span class="n">problem</span> <span class="o">=</span> <span class="n">BasicDataset</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span><span class="o">.</span><span class="n">ledge</span><span class="p">(</span><span class="n">force_per_area</span><span class="o">=-</span><span class="mf">1e6</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">SELTODataset</span><span class="p">(</span><span class="s2">&quot;/localdata/dl4to_dataset&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;disc_complex&#39;</span><span class="p">)</span>
+<span class="n">problem</span><span class="p">,</span> <span class="n">gt_solution</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">problem</span><span class="o">.</span><span class="n">pde_solver</span> <span class="o">=</span> <span class="n">FDM</span><span class="p">()</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Found 7337 files.
+importing dataset...
+done!
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -139,7 +161,7 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For now, we don't really need to know how the algorithm works exactly. We can initialize SIMP as follows:</p>
+<p>We initialize SIMP as follows, with a learning rate of 0.3:</p>
 
 </div>
 </div>
@@ -155,9 +177,9 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 
 <span class="n">simp</span> <span class="o">=</span> <span class="n">SIMP</span><span class="p">(</span>
     <span class="n">criterion</span><span class="o">=</span><span class="n">criterion</span><span class="p">,</span>
-    <span class="n">n_iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-    <span class="n">binarizer_steepening_factor</span><span class="o">=</span><span class="mf">1.06</span><span class="p">,</span>
-    <span class="n">lr</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span>
+    <span class="n">binarizer_steepening_factor</span><span class="o">=</span><span class="mf">1.02</span><span class="p">,</span>
+    <span class="n">n_iterations</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span>
+    <span class="n">lr</span><span class="o">=</span><span class="mf">3e-1</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -217,8 +239,9 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">camera_position</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">camera_position</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.06</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">)</span>
 <span class="n">solution</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">camera_position</span><span class="o">=</span><span class="n">camera_position</span><span class="p">,</span>
+              <span class="n">binary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
               <span class="n">solve_pde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
               <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
@@ -232,9 +255,9 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="https://dl4to.github.io/dl4to/images/3_density.png" alt="density">
-<img src="https://dl4to.github.io/dl4to/images/3_displacements.png" alt="displacements">
-<img src="https://dl4to.github.io/dl4to/images/3_stresses.png" alt="stresses"></p>
+<p><img src="/dl4toimages/3_density_disc.png" alt="density">
+<img src="/dl4toimages/3_displacements_disc.png" alt="displacements">
+<img src="/dl4toimages/3_stresses_disc.png" alt="stresses"></p>
 
 </div>
 </div>
@@ -248,7 +271,7 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can check the volume fraction of this solution via the following:</p>
+<p>We can observe that the volume fraction of the SIMP solution is exactly 0.12:</p>
 
 </div>
 </div>
@@ -260,8 +283,10 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">volume_fraction</span> <span class="o">=</span> <span class="n">VolumeFraction</span><span class="p">()</span>
-<span class="n">solution</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">volume_fraction</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">dl4to.criteria</span> <span class="kn">import</span> <span class="n">VolumeFraction</span>
+
+<span class="n">volume_fraction</span> <span class="o">=</span> <span class="n">VolumeFraction</span><span class="p">()</span>
+<span class="n">volume_fraction</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -276,7 +301,7 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>tensor([0.4208], grad_fn=&lt;DivBackward0&gt;)</pre>
+<pre>tensor([0.1200], grad_fn=&lt;DivBackward0&gt;)</pre>
 </div>
 
 </div>
@@ -289,7 +314,7 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We also implemented a "Binariness" criterion which determines how binary the solution is. A value of $1$ means that it is fully binary, while a lower value signifies many values that are not near $0$ or $1$.</p>
+<p>With DL4TO we provide an unsupervised criterion called <a href="/dl4tounsupervised_criteria.html#Binariness"><code>Binariness</code></a> which determines how binary the solution is. A value of $1$ means that it is fully binary, while a lower value signifies many values that are not near $0$ or $1$. We see that our solution is almost fully binary:</p>
 
 </div>
 </div>
@@ -304,7 +329,7 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">dl4to.criteria</span> <span class="kn">import</span> <span class="n">Binariness</span>
 
 <span class="n">binariness</span> <span class="o">=</span> <span class="n">Binariness</span><span class="p">()</span>
-<span class="n">solution</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">binariness</span><span class="p">)</span>
+<span class="n">binariness</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -319,7 +344,7 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>tensor([0.9989])</pre>
+<pre>tensor([0.9164])</pre>
 </div>
 
 </div>
@@ -332,11 +357,47 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The binariness score is very high, which confirms the impression that we get from the 3d plot above.</p>
+<p>As we can observe from the above 3D plot, the von Mises stresses are well below the yield stress. The <a href="/dl4tounsupervised_criteria.html#MaxStress"><code>MaxStress</code></a> criterion confirms this with a normalized maximal stress of only a quarter of the maximum value of 1:</p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">dl4to.criteria</span> <span class="kn">import</span> <span class="n">MaxStress</span>
+
+<span class="n">max_stress</span> <span class="o">=</span> <span class="n">MaxStress</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">max_stress</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([0.2563], grad_fn=&lt;DivBackward0&gt;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 </div>
  
 

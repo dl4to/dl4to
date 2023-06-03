@@ -216,6 +216,14 @@ class SupervisedCriterion(Criterion):
                         )
 
 
+    def _convert_to_list(self, solutions, gt_solutions):
+        if type(solutions) is not list:
+            solutions = [solutions]
+        if type(gt_solutions) is not list:
+            gt_solutions = [gt_solutions]
+        return solutions, gt_solutions
+
+
     def _check_inputs(self, solutions, gt_solutions):
         if gt_solutions is None:
             raise AttributeError('The criterion is supervised and needs ground thruth data. Therefore, gt_solution should not be None.')
@@ -310,6 +318,7 @@ class WeightedBCE(SupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions, gt_solutions = self._convert_to_list(solutions, gt_solutions)
         self._check_inputs(solutions, gt_solutions)
         θ = self.get_θ_flat(solutions, binary=binary)
         θ_true = self.get_θ_flat(gt_solutions, binary=binary)
@@ -374,6 +383,7 @@ class WeightedFocal(SupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions, gt_solutions = self._convert_to_list(solutions, gt_solutions)
         self._check_inputs(solutions, gt_solutions)
         θ = self.get_θ_flat(solutions, binary=binary)
         θ_true = self.get_θ_flat(gt_solutions, binary=binary)
@@ -407,6 +417,7 @@ class Dice(SupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions, gt_solutions = self._convert_to_list(solutions, gt_solutions)
         self._check_inputs(solutions, gt_solutions)
         θ = self.get_θ_flat(solutions, binary=binary)
         θ_true = self.get_θ_flat(gt_solutions, binary=binary)
@@ -448,6 +459,7 @@ class Tversky(SupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions, gt_solutions = self._convert_to_list(solutions, gt_solutions)
         self._check_inputs(solutions, gt_solutions)
         θ = self.get_θ_flat(solutions, binary=binary)
         θ_true = self.get_θ_flat(gt_solutions, binary=binary)
@@ -491,6 +503,7 @@ class FocalTversky(SupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions, gt_solutions = self._convert_to_list(solutions, gt_solutions)
         self._check_inputs(solutions, gt_solutions)
         θ = self.get_θ_flat(solutions, binary=binary)
         θ_true = self.get_θ_flat(gt_solutions, binary=binary)
@@ -530,6 +543,7 @@ class IoU(SupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions, gt_solutions = self._convert_to_list(solutions, gt_solutions)
         self._check_inputs(solutions, gt_solutions)
         θ = self.get_θ_flat(solutions, binary=binary)
         θ_true = self.get_θ_flat(gt_solutions, binary=binary)
@@ -566,6 +580,7 @@ class VoxelAccuracy(SupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions, gt_solutions = self._convert_to_list(solutions, gt_solutions)
         self._check_inputs(solutions, gt_solutions)
         θ = self.get_θ_flat(solutions, binary=binary)
         θ_true = self.get_θ_flat(gt_solutions, binary=binary)
@@ -604,6 +619,7 @@ class BalancedVoxelAccuracy(SupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions, gt_solutions = self._convert_to_list(solutions, gt_solutions)
         self._check_inputs(solutions, gt_solutions)
         θ = self.get_θ_flat(solutions, binary=binary)
         θ_true = self.get_θ_flat(gt_solutions, binary=binary)
@@ -637,6 +653,7 @@ class L2Accuracy(SupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions, gt_solutions = self._convert_to_list(solutions, gt_solutions)
         self._check_inputs(solutions, gt_solutions)
         θ = self.get_θ_flat(solutions, binary=binary)
         θ_true = self.get_θ_flat(gt_solutions, binary=binary)
@@ -673,6 +690,12 @@ class UnsupervisedCriterion(Criterion):
                         )
 
 
+    def _convert_to_list(self, solutions):
+        if type(solutions) is not list:
+            solutions = [solutions]
+        return solutions
+
+
     def __call__(self,
                  solutions:list, # The solutions that should be evaluated with the criterion.
                  gt_solutions:list=None, # Ground truth solutions that are compared element-wise with the `solutions`. Since the criterion is unsupervised this does not have an effect.
@@ -690,7 +713,10 @@ class Compliance(UnsupervisedCriterion):
     The criterionis computes as $F^T u$, where $F$ are the external forces and $u$ are the displacements, which are derived from the PDE for linear elasticity.
     Lower values are desired and higher values indicate worse scores.
     """
-    def __init__(self):
+    def __init__(self,
+                 α:float=1e-9 # The weight that is used to rescale the forces F.
+                ):
+        self.α = α
         super().__init__(
             name=f'compliance',
             compute_only_on_design_space=False
@@ -705,10 +731,12 @@ class Compliance(UnsupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions = self._convert_to_list(solutions)
         compliance_list = []
         for i, solution in enumerate(solutions):
             u, σ, σ_vm = solution.solve_pde(binary=binary)
-            compliance_list.append(torch.dot(solution.problem.F.flatten(), u.flatten().float()))
+            F = self.α * solution.problem.F.flatten()
+            compliance_list.append(torch.dot(F, u.flatten().float()))
         return torch.stack(compliance_list)
 
 # Cell
@@ -733,6 +761,7 @@ class Volume(UnsupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions = self._convert_to_list(solutions)
         θ = self.get_θ_flat(solutions, binary=binary)
         design_space_mask = self.get_design_space_mask(solutions)
         θ_design = θ * design_space_mask
@@ -761,6 +790,7 @@ class VolumeFraction(UnsupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions = self._convert_to_list(solutions)
         volume = self.volume_crit(solutions, gt_solutions, binary)
         design_space_mask = self.get_design_space_mask(solutions)
         return volume / design_space_mask.sum(dim=1)
@@ -799,6 +829,7 @@ class VolumeConstraint(UnsupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions = self._convert_to_list(solutions)
         volume_fraction = self.volume_fraction_crit(solutions, gt_solutions, binary)
         positives_are_too_large = volume_fraction - self.max_volume_fraction
         approximately_only_positives = self.threshold_fct(positives_are_too_large)
@@ -842,6 +873,7 @@ class ForcesUnderpinned(UnsupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions = self._convert_to_list(solutions)
         results = []
         if binary == False:
             warnings.warn("Automatically setting binary=True for ForcesUnderpinned Criterion.")
@@ -886,6 +918,7 @@ class MaxStress(UnsupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions = self._convert_to_list(solutions)
         if self.compute_only_for_not_underpinned:
             forces_underpinned = self.forces_underpinned_crit(solutions, gt_solutions, binary)
         else:
@@ -937,6 +970,7 @@ class StressConstraint(UnsupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions = self._convert_to_list(solutions)
         positives_are_too_large = []
         for i, solution in enumerate(solutions):
             u,  σ, σ_vm = solution.solve_pde(binary=binary)
@@ -972,6 +1006,7 @@ class Fail(UnsupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions = self._convert_to_list(solutions)
         failed_due_to_max_stress = (self.max_stress_crit(solutions, gt_solutions, binary=binary) > 1 + self.ε).float()
         failed_total = (~self.forces_underpinned_crit(solutions, gt_solutions, binary=True).bool()).float()
         failed_total.cpu()[failed_total == 0.] = failed_due_to_max_stress
@@ -1004,6 +1039,7 @@ class StressEfficiency(UnsupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions = self._convert_to_list(solutions)
         if self.compute_only_for_not_underpinned:
             forces_underpinned = self.forces_underpinned_crit(solutions, gt_solutions, binary)
         else:
@@ -1046,6 +1082,7 @@ class Binariness(UnsupervisedCriterion):
         """
         Calculates the output of the criterion for all solutions.
         """
+        solutions = self._convert_to_list(solutions)
         θ = self.get_θ_flat(solutions, binary=False)
         design_space_mask = self.get_design_space_mask(solutions)
         θ_design = θ * design_space_mask

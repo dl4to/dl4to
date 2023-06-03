@@ -533,7 +533,7 @@ class SIMPIterator:
         criterion:"dl4to.criteria.Criterion", # The objective function that should be optimized for in the optimization process.
         density_representer:"dl4to.density_representers.DensityRepresenter", # The density representer that is used for the latent density representation. The density representer also performs the projection, smoothing and filtering.
         lr:float, # The learning rate of the `torch.optim.Adam` optimizer.
-        binarizer_steepening_factor:float # The factor at which the binarizer should be steepened in each iteration. The default value of 1.1 corresponds to a steepening of 10%.
+        binarizer_steepening_factor:float # The factor at which the binarizer should be steepened in each iteration. E.g.,a value of 1.1 corresponds to a steepening of 10% per iteration.
     ):
         self.lr = lr
         self.logs = defaultdict(list)
@@ -610,7 +610,7 @@ class SIMP(TopoSolver):
         n_iterations:int=50, # The number of SIMP iterations that should be performed.
         verbose:bool=True, # Whether to give the user feedback on the current status of the optimization.
         lr:float=3e-2, # The learning rate of the `torch.optim.Adam` optimizer.
-        binarizer_steepening_factor:float=1.1, # The factor at which the binarizer should be steepened in each iteration. The default value of 1.1 corresponds to a steepening of 10%.
+        binarizer_steepening_factor:float=1., # The factor at which the binarizer should be steepened in each iteration. E.g.,a value of 1.1 corresponds to a steepening of 10% per iteration.
         density_representer:"dl4to.density_representers.DensityRepresenter"=FilteringDensityRepresenter(), # The density representer that is used for the latent density representation. The density representer also performs the projection, smoothing and filtering.
         return_intermediate_solutions:bool=False # Whether intermediate SIMP solutions should be returned or only the final solution of the optimization process.
     ):

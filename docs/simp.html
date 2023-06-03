@@ -47,7 +47,7 @@ nb_path: "notebooks/topo_solvers/5_simp.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="SIMP" class="doc_header"><code>class</code> <code>SIMP</code><a href="dl4to/topo_solvers.py#L602" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SIMP</code>(<strong><code>criterion</code></strong>:<code>dl4to.criteria.Criterion</code>, <strong><code>p</code></strong>:<code>float</code>=<em><code>3.0</code></em>, <strong><code>n_iterations</code></strong>:<code>int</code>=<em><code>50</code></em>, <strong><code>verbose</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>lr</code></strong>:<code>float</code>=<em><code>0.03</code></em>, <strong><code>binarizer_steepening_factor</code></strong>:<code>float</code>=<em><code>1.1</code></em>, <strong><code>density_representer</code></strong>:<code>dl4to.density_representers.DensityRepresenter</code>=<em><code>FilteringDensityRepresenter()</code></em>, <strong><code>return_intermediate_solutions</code></strong>:<code>bool</code>=<em><code>False</code></em>) :: <a href="/dl4totopo_solver.html#TopoSolver"><code>TopoSolver</code></a></p>
+<h2 id="SIMP" class="doc_header"><code>class</code> <code>SIMP</code><a href="dl4to/topo_solvers.py#L602" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SIMP</code>(<strong><code>criterion</code></strong>:<code>dl4to.criteria.Criterion</code>, <strong><code>p</code></strong>:<code>float</code>=<em><code>3.0</code></em>, <strong><code>n_iterations</code></strong>:<code>int</code>=<em><code>50</code></em>, <strong><code>verbose</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>lr</code></strong>:<code>float</code>=<em><code>0.03</code></em>, <strong><code>binarizer_steepening_factor</code></strong>:<code>float</code>=<em><code>1.0</code></em>, <strong><code>density_representer</code></strong>:<code>dl4to.density_representers.DensityRepresenter</code>=<em><code>FilteringDensityRepresenter()</code></em>, <strong><code>return_intermediate_solutions</code></strong>:<code>bool</code>=<em><code>False</code></em>) :: <a href="/dl4totopo_solver.html#TopoSolver"><code>TopoSolver</code></a></p>
 </blockquote>
 <p>A topo solver that performs topology optimization with the "Solid Isotropic Material with Penalization" (SIMP) method.</p>
 <table>
@@ -92,8 +92,8 @@ nb_path: "notebooks/topo_solvers/5_simp.ipynb"
 <tr>
 <td><strong><code>binarizer_steepening_factor</code></strong></td>
 <td><code>float</code></td>
-<td><code>1.1</code></td>
-<td>The factor at which the binarizer should be steepened in each iteration. The default value of 1.1 corresponds to a steepening of 10%.</td>
+<td><code>1.0</code></td>
+<td>The factor at which the binarizer should be steepened in each iteration. E.g.,a value of 1.1 corresponds to a steepening of 10% per iteration.</td>
 </tr>
 <tr>
 <td><strong><code>density_representer</code></strong></td>
