@@ -42,9 +42,9 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Finally, we start actually performing topology optimization!</p>
-<p>The TopoSolver class is a parent class that inherits all types of methods for solving TO problems. This contains the famous SIMP method, DL based methods, as well as arbitrary combinations of these two.</p>
-<p>In this chapter we start with an introduction of how our optimization pipeline works. For now, we will focus mainly on the SIMP method an we will discuss learned methods in the next tutorial.</p>
+<p>Finally, we actually start performing topology optimization!</p>
+<p>The <a href="/dl4totopo_solver.html#TopoSolver"><code>TopoSolver</code></a> class inherits all types of methods for solving TO problems. This contains the famous SIMP method, deep learning-based methods, as well as arbitrary combinations of these two.</p>
+<p>In this chapter we start with an introduction of how our optimization pipeline works. For now, we will focus mainly on the SIMP method and we will discuss learned methods in the next tutorial.</p>
 
 </div>
 </div>
@@ -57,10 +57,10 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For any topo solver we need to choose an optimization criterion, i.e., an objective function that for which we want to optimize. Our library contains many criteria that can be used for evaluation or as loss/objective functions. Generally speaking, we have two different types of criteria: supervised and unsupervised.</p>
+<p>For any topo solver we need to choose an optimization criterion, i.e., an objective function and constraints for which we want to optimize. Our library contains many criteria that can be used for evaluation or as objective functions. Generally speaking, we have two different types of criteria: supervised and unsupervised.</p>
 <ul>
-<li>Supervised criteria compare a given solution to a ground truth solution. This for instance contains common loss functions like the "binary cross entropy" (BCE) function as well as many commonly used evaluation criteria for semantic segmentation, like the "Intersection over Union" (IoU) and "Dice". </li>
-<li>Unsupervised criteria don't require a ground truth and evaluates inputs based on their intrinsic properties. This includes criteria for volume, maximal stress and compliance.</li>
+<li><strong>Supervised criteria</strong> compare a given solution to a ground truth solution. These include for instance common loss functions like the "binary cross entropy" (BCE) as well as many commonly used evaluation criteria for semantic segmentation, like the "Intersection over Union" (IoU) and "Dice". </li>
+<li><strong>Unsupervised criteria</strong> don't require a ground truth and evaluate inputs based on their intrinsic properties. They include criteria for volume, maximal stress and compliance.</li>
 </ul>
 <p>We will use some of the mentioned criteria in this and in the next tutorial on trainable topo solvers.</p>
 <p>For SIMP, we use compliance minimization with a volume constraint:</p>
@@ -89,14 +89,14 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Compliance is a very common objective in topology optimization. It is defined as the product of external forces and displacements. The <a href="/dl4tounsupervised_criteria.html#VolumeConstraint"><code>VolumeConstraint</code></a> criterion compares the volume fraction -- i.e., the average voxel density -- wit a pre-defined maximum volume fraction (which in this case is 0.12). If the difference is negative (i.e., the current volume is below the maximum volume fraction) then this criterion returns 0, otherwise it returns a positive output. The thresholding can be done via either a ReLU function or a Softplus function. Both <a href="/dl4tounsupervised_criteria.html#Compliance"><code>Compliance</code></a> and <a href="/dl4tounsupervised_criteria.html#VolumeConstraint"><code>VolumeConstraint</code></a> are unsupervised criteria.</p>
+<p><a href="/dl4tounsupervised_criteria.html#Compliance"><code>Compliance</code></a> is a very common objective in topology optimization. It is defined as the product of external forces and displacements. The <a href="/dl4tounsupervised_criteria.html#VolumeConstraint"><code>VolumeConstraint</code></a> criterion compares the volume fraction -- i.e., the average voxel density -- wit a pre-defined maximum volume fraction (which in this case is 0.12). If the difference is negative (i.e., the current volume is below the maximum volume fraction) then this criterion returns 0, otherwise it returns a positive output. The thresholding can be done either via ReLU or Softplus. Both <a href="/dl4tounsupervised_criteria.html#Compliance"><code>Compliance</code></a> and <a href="/dl4tounsupervised_criteria.html#VolumeConstraint"><code>VolumeConstraint</code></a> are unsupervised criteria.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For our TO problem we choose the first sample of the disc complex SELTO dataset and we pass a FDM solver to it:</p>
+<p>For our TO problem we choose the first sample of the disc complex SELTO dataset and we pass an FDM solver to it:</p>
 
 </div>
 </div>
@@ -198,12 +198,7 @@ done!
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In order to apply a topo_solver to a problem, we can simply call it via</p>
-
-<pre><code>solution = topo_solver(problem),
-
-</code></pre>
-<p>which returns a solution object. This also works with a list of problems as input, in which case topo solver likewise returns a list of solutions.</p>
+<p>In order to apply a topo_solver to a problem, we can simply call it via <code>solution = topo_solver(problem)</code>, which returns a solution object. This also works with a list of problems as input, in which case topo solver likewise returns a list of solutions.</p>
 
 </div>
 </div>
@@ -314,7 +309,7 @@ done!
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>With DL4TO we provide an unsupervised criterion called <a href="/dl4tounsupervised_criteria.html#Binariness"><code>Binariness</code></a> which determines how binary the solution is. A value of $1$ means that it is fully binary, while a lower value signifies many values that are not near $0$ or $1$. We see that our solution is almost fully binary:</p>
+<p>With DL4TO we provide an unsupervised criterion called <a href="/dl4tounsupervised_criteria.html#Binariness"><code>Binariness</code></a> which determines how binary the solution is. A value of $1$ means that it is fully binary, while a lower value signifies that there are more values around $0.5$. We see that our solution is almost fully binary:</p>
 
 </div>
 </div>
