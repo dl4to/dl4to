@@ -48,7 +48,7 @@ A selection of deep learning-related problems that you can adress with DL4TO:
 - **Learn the PDE solver:** You can implement a neural network that learns a mapping from densities to displacements or stresses and use this as a substitute for the FDM solver, for instance in the SIMP method.
 
 <div style="display: flex; justify-content: row;">
-    <img src="images/simp_animation2.gif" style="width:300px;height:auto;" />
+    <img src="https://dl4to.github.io/dl4to/simp_animation2.gif" style="width:300px;height:auto;" />
 </div>
 
 # Getting Started
@@ -73,7 +73,7 @@ If you want to change or add something to the code you should clone the reposito
 `pip install .`
 
 <div style="display: flex; justify-content: row;">
-    <img src="images/simp_animation.gif" style="width:300px;height:auto;" />
+    <img src="https://dl4to.github.io/dl4to/simp_animation.gif" style="width:300px;height:auto;" />
 </div>
 
 # About
