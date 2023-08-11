@@ -113,7 +113,7 @@ nb_path: "notebooks/tutorials/3_tutorial_topo_solvers.ipynb"
 
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">SELTODataset</span><span class="p">(</span><span class="s2">&quot;/localdata/dl4to_dataset&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;disc_complex&#39;</span><span class="p">)</span>
 <span class="n">problem</span><span class="p">,</span> <span class="n">gt_solution</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">problem</span><span class="o">.</span><span class="n">pde_solver</span> <span class="o">=</span> <span class="n">FDM</span><span class="p">()</span>
+<span class="n">problem</span><span class="o">.</span><span class="n">pde_solver</span> <span class="o">=</span> <span class="n">FDM</span><span class="p">(</span><span class="n">padding_depth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -259,14 +259,14 @@ done!
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We see that the output of the SIMP algorithm returns indeed a plausible solution to the TO problem.</p>
+<p>We see that the output of the SIMP algorithm returns indeed a plausible solution to the TO problem. Note that if you wish to rerun SIMP with the same <code>simp</code> instance, you should run <code>simp.reset()</code> prior to that. This is done in order to reset SIMP optimization parameters.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can observe that the volume fraction of the SIMP solution is exactly 0.12:</p>
+<p>We can observe that the volume fraction of the SIMP solution is almost exactly 0.12:</p>
 
 </div>
 </div>
@@ -296,7 +296,7 @@ done!
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>tensor([0.1200], grad_fn=&lt;DivBackward0&gt;)</pre>
+<pre>tensor([0.1203], grad_fn=&lt;DivBackward0&gt;)</pre>
 </div>
 
 </div>
@@ -339,7 +339,7 @@ done!
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>tensor([0.9164])</pre>
+<pre>tensor([0.9042])</pre>
 </div>
 
 </div>
@@ -352,7 +352,7 @@ done!
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As we can observe from the above 3D plot, the von Mises stresses are well below the yield stress. The <a href="/dl4tounsupervised_criteria.html#MaxStress"><code>MaxStress</code></a> criterion confirms this with a normalized maximal stress of only a quarter of the maximum value of 1:</p>
+<p>As we can observe from the above 3D plot, the von Mises stresses are well below the yield stress. The <a href="/dl4tounsupervised_criteria.html#MaxStress"><code>MaxStress</code></a> criterion confirms this with a normalized maximal stress of less than a quarter of the maximum value of 1:</p>
 
 </div>
 </div>
@@ -382,7 +382,7 @@ done!
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>tensor([0.2563], grad_fn=&lt;DivBackward0&gt;)</pre>
+<pre>tensor([0.2151], grad_fn=&lt;DivBackward0&gt;)</pre>
 </div>
 
 </div>

@@ -54,7 +54,7 @@ A selection of deep learning-related problems that you can adress with DL4TO:
 # Getting Started
 
 To learn the functionality and usage of DL4TO we recommend to have a look at the following sections:
-- Paper: We published a conference paper on DL4TO that explains the fundamentals of our framework [2]
+- [Paper: We published a conference paper on DL4TO that explains the fundamentals of our framework](https://doi.org/10.1007/978-3-031-38271-0_54) [2]
 - [Tutorial: Understand the structure of DL4TO](https://dl4to.github.io/dl4to/tutorial_overview.html)
 - [Documentation](https://dl4to.github.io/dl4to/) 
 
@@ -92,6 +92,6 @@ DL4TO uses an Apache License, see the [LICENSE](LICENSE) file.
 
 [1] Dittmer, Sören, et al. "SELTO: Sample-Efficient Learned Topology Optimization." arXiv preprint arXiv:2209.05098 (2023).
 
-[2] Erzmann, David, et al. "DL4TO: A Deep Learning Library for Sample-Efficient Topology Optimization" (2023).
+[2] Erzmann, David, et al. "DL4TO : A Deep Learning Library for Sample-Efficient Topology Optimization". Springer. https://doi.org/10.1007/978-3-031-38271-0_54 (2023)
 
 [3] Dittmer, Sören, et al. "SELTO Dataset". Zenodo. https://doi.org/10.5281/zenodo.7781392 (2023)

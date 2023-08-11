@@ -557,10 +557,8 @@ class SIMPIterator:
 
     def _perform_optimizer_step(self, loss):
         self.optimizer.zero_grad()
-        loss.backward(retain_graph=True)
-        grads = torch.autograd.grad(loss, self.density_representer.θ)[0].detach()
+        loss.backward()
         self.optimizer.step()
-        return grads
 
 
     def __call__(self,
@@ -580,14 +578,13 @@ class SIMPIterator:
         loss = self.criterion([solution])
         volume = self.volume_crit([solution])
 
-        grads = self._perform_optimizer_step(loss)
+        self._perform_optimizer_step(loss)
         solution.θ = self.density_representer()
         self.density_representer.steepen_binarizer(self.binarizer_steepening_factor)
 
         self._extend_logs(solution, loss, volume, tick, σ_vm)
         solution.logs = self.logs
 
-        solution.logs['grads'].append(grads)
         return solution
 
 # Cell
@@ -639,6 +636,10 @@ class SIMP(TopoSolver):
         if self.return_intermediate_solutions:
             return solutions
         return solution
+
+
+    def reset(self):
+        self.density_representer.reset_binarizer()
 
 
     def _get_new_simp_iterator(self, solution, density_representer):

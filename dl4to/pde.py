@@ -824,7 +824,7 @@ class FDM(UnpaddedFDM):
     def __init__(self, θ_min:float=1e-6, # The minimal value in the stiffness matrix. For numerical reasons we can not allow 0s, since they may lead to singular matrices.
                  use_forward_differences:bool=True, # Whether to use forward differences or central differences.
                  assemble_tensors_when_passed_to_problem:bool=True, # Whether the PDE solver methods pre-assembles any tensors or arrays before solving the PDE for a concrete problem.
-                 padding_depth:int=2 # The depth of the padding surrounding the design space. Padding of 2 improves numerical performance.
+                 padding_depth:int=0 # The depth of the padding surrounding the design space. In some cases, it is recommended to increase the padding depth to 2 to improve results but also increase running time.
                 ):
         self.padding_depth = padding_depth
         super().__init__(

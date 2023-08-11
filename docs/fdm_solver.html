@@ -40,7 +40,7 @@ nb_path: "notebooks/pde/5_fdm_solver.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="FDM" class="doc_header"><code>class</code> <code>FDM</code><a href="dl4to/pde.py#L820" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>FDM</code>(<strong><code>θ_min</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>use_forward_differences</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>assemble_tensors_when_passed_to_problem</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>padding_depth</code></strong>:<code>int</code>=<em><code>2</code></em>) :: <a href="/dl4tounpadded_fdm.html#UnpaddedFDM"><code>UnpaddedFDM</code></a></p>
+<h2 id="FDM" class="doc_header"><code>class</code> <code>FDM</code><a href="dl4to/pde.py#L820" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>FDM</code>(<strong><code>θ_min</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>use_forward_differences</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>assemble_tensors_when_passed_to_problem</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>padding_depth</code></strong>:<code>int</code>=<em><code>0</code></em>) :: <a href="/dl4tounpadded_fdm.html#UnpaddedFDM"><code>UnpaddedFDM</code></a></p>
 </blockquote>
 <p>A PDE solver for linear elasticity that uses the finite differences method (FDM) with padding.</p>
 <table>
@@ -73,8 +73,8 @@ nb_path: "notebooks/pde/5_fdm_solver.ipynb"
 <tr>
 <td><strong><code>padding_depth</code></strong></td>
 <td><code>int</code></td>
-<td><code>2</code></td>
-<td>The depth of the padding surrounding the design space. Padding of 2 improves numerical performance.</td>
+<td><code>0</code></td>
+<td>The depth of the padding surrounding the design space. In some cases, it is recommended to increase the padding depth to 2 to improve results but also increase running time.</td>
 </tr>
 </tbody>
 </table>
@@ -92,6 +92,34 @@ nb_path: "notebooks/pde/5_fdm_solver.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Input <span class="ansi-green-fg">In [1]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)">#export</span>
+<span class="ansi-green-fg">----&gt; 2</span> <span class="ansi-bold" style="color: rgb(0,135,0)">class</span> <span class="ansi-bold" style="color: rgb(0,0,255)">FDM</span>(<span class="ansi-yellow-bg">UnpaddedFDM</span>):
+<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(188,188,188)">    </span><span style="color: rgb(175,0,0)">&#34;&#34;&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span> <span style="color: rgb(175,0,0)">    A PDE solver for linear elasticity that uses the finite differences method (FDM) with padding.</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span> <span style="color: rgb(175,0,0)">    &#34;&#34;&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">      6</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">__init__</span>(<span style="color: rgb(0,135,0)">self</span>, θ_min:<span style="color: rgb(0,135,0)">float</span><span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">1e-6</span>, <span style="color: rgb(95,135,135)"># The minimal value in the stiffness matrix. For numerical reasons we can not allow 0s, since they may lead to singular matrices.</span>
+<span class="ansi-green-intense-fg ansi-bold">      7</span>                  use_forward_differences:<span style="color: rgb(0,135,0)">bool</span><span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">True</span>, <span style="color: rgb(95,135,135)"># Whether to use forward differences or central differences.</span>
+<span class="ansi-green-intense-fg ansi-bold">      8</span>                  assemble_tensors_when_passed_to_problem:<span style="color: rgb(0,135,0)">bool</span><span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">True</span>, <span style="color: rgb(95,135,135)"># Whether the PDE solver methods pre-assembles any tensors or arrays before solving the PDE for a concrete problem.</span>
+<span class="ansi-green-intense-fg ansi-bold">      9</span>                  padding_depth:<span style="color: rgb(0,135,0)">int</span><span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span> <span style="color: rgb(95,135,135)"># The depth of the padding surrounding the design space. In some cases, it is recommended to increase the padding depth to 2 to improve results but also increase running time.</span>
+<span class="ansi-green-intense-fg ansi-bold">     10</span>                 ):
+
+<span class="ansi-red-fg">NameError</span>: name &#39;UnpaddedFDM&#39; is not defined</pre>
+</div>
+</div>
+
+</div>
+</div>
 
 </div>
     {% endraw %}
