@@ -269,44 +269,6 @@ nb_path: "notebooks/plotting/logs_plotting.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [29]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)">#export</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">plot_logs</span>(
-<span class="ansi-green-intense-fg ansi-bold">      3</span>     x:<span style="color: rgb(0,135,0)">list</span>, <span style="color: rgb(95,135,135)"># The x coordinates of the data.,</span>
-<span class="ansi-green-intense-fg ansi-bold">      4</span>     logs:defaultdict, <span style="color: rgb(95,135,135)"># A dictionary that contains a list of values for each key. The keys are the same strings stored in `criterion_names`, optionally along with tiehr standard deviations.</span>
-<span class="ansi-green-intense-fg ansi-bold">      5</span>     criterion_names:<span style="color: rgb(0,135,0)">list</span>, <span style="color: rgb(95,135,135)"># The criterion names deterime which keys are accesssed in the logs file for the plot.</span>
-<span class="ansi-green-intense-fg ansi-bold">      6</span>     file_path:<span style="color: rgb(0,135,0)">str</span><span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>, <span style="color: rgb(95,135,135)"># The path where the plot should be saved as a png file.</span>
-<span class="ansi-green-intense-fg ansi-bold">      7</span>     label:<span style="color: rgb(0,135,0)">str</span><span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>, <span style="color: rgb(95,135,135)"># The label of the plot.</span>
-<span class="ansi-green-intense-fg ansi-bold">      8</span>     x_label:<span style="color: rgb(0,135,0)">str</span><span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>, <span style="color: rgb(95,135,135)"># The x label of the plot.</span>
-<span class="ansi-green-intense-fg ansi-bold">      9</span>     share_x_axis:<span style="color: rgb(0,135,0)">bool</span><span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">True</span>, <span style="color: rgb(95,135,135)"># Whether all plots should share the same x axis or should be plotted in individual plots below one another.</span>
-<span class="ansi-green-intense-fg ansi-bold">     10</span>     show_legend:<span style="color: rgb(0,135,0)">bool</span><span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">True</span>, <span style="color: rgb(95,135,135)"># Whether to show a legend for the plot.</span>
-<span class="ansi-green-fg">---&gt; 11</span>     fig_and_axes:<span class="ansi-yellow-bg" style="color: rgb(0,135,0)">tuple</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">matplotlib</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">figure</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">Figure</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">matplotlib.axes.AxesSubplot</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span><span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>, <span style="color: rgb(95,135,135)"># The figure and axes, if already built.</span>
-<span class="ansi-green-intense-fg ansi-bold">     12</span>     logplot:<span style="color: rgb(0,135,0)">bool</span><span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">False</span>, <span style="color: rgb(95,135,135)"># Whether to plot the x axis logarithmically.</span>
-<span class="ansi-green-intense-fg ansi-bold">     13</span>     plot_with_std:<span style="color: rgb(0,135,0)">bool</span><span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">False</span>, <span style="color: rgb(95,135,135)"># Whether to also plot the standard deviations of the data. Requires keys `{criterion_name}_std` in `logs`.</span>
-<span class="ansi-green-intense-fg ansi-bold">     14</span>     std_alpha:<span style="color: rgb(0,135,0)">float</span><span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0.2</span>, <span style="color: rgb(95,135,135)"># The alpha value for `y_std`. Only has an effect if `y_std` is not None.</span>
-<span class="ansi-green-intense-fg ansi-bold">     15</span>     y_ticks:<span style="color: rgb(0,135,0)">list</span><span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>, <span style="color: rgb(95,135,135)"># The y ticks for the plots.</span>
-<span class="ansi-green-intense-fg ansi-bold">     16</span>     <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs):
-<span class="ansi-green-intense-fg ansi-bold">     17</span> <span style="color: rgb(188,188,188)">    </span><span style="color: rgb(175,0,0)">&#34;&#34;&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">     18</span> <span style="color: rgb(175,0,0)">    A method to plot criterion evaluation curves stored in a logs file.</span>
-<span class="ansi-green-intense-fg ansi-bold">     19</span> <span style="color: rgb(175,0,0)">    &#34;&#34;&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">     20</span>     n_plots <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">len</span>(criterion_names)
-
-<span class="ansi-red-fg">TypeError</span>: tuple expected at most 1 argument, got 2</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 

@@ -72,6 +72,10 @@ If you want to change or add something to the code you should clone the reposito
 
 `pip install .`
 
+Note: One of our plotting engines, pyvista, has recently deprecated support of the `pythreejs` backend that we use in the library. For that reason, we recommend installing a specific version of pyvista:
+
+`pip install pyvista==0.38.1`
+
 <div style="display: flex; justify-content: row;">
     <img src="https://dl4to.github.io/dl4to/simp_animation.gif" style="width:300px;height:auto;" />
 </div>

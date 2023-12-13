@@ -8,6 +8,25 @@ import numpy as np
 from .plotting import plot_scalar_field, pyvista_plot_scalar_field
 
 # Internal Cell
+def add_corners(solution):
+    solution._θ[:,0,0,0] = 1.
+    solution._θ[:,0,0,-1] = 1.
+    solution._θ[:,0,-1,0] = 1.
+    solution._θ[:,-1,0,0] = 1.
+    solution._θ[:,-1,-1,-1] = 1.
+    solution._θ[:,-1,-1,0] = 1.
+    solution._θ[:,0,-1,-1] = 1.
+    solution._θ[:,-1,0,-1] = 1.
+    solution._θ[:,0,0,2] = 1.
+    solution._θ[:,0,2,0] = 1.
+    solution._θ[:,2,0,0] = 1.
+    solution._θ[:,2,2,2] = 1.
+    solution._θ[:,2,2,0] = 1.
+    solution._θ[:,0,2,2] = 1.
+    solution._θ[:,2,0,2] = 1.
+    return solution
+
+# Internal Cell
 class PlottingForSolution:
     @staticmethod
     def __call__(
@@ -30,6 +49,8 @@ class PlottingForSolution:
     ):
 
         file_path_ = file_path
+        if use_pyvista and smooth_iters > 0:
+            solution = add_corners(solution)
         θ = solution.get_θ(binary=binary).cpu().detach().numpy()
         if use_pyvista:
             plotting_kwargs = {'problem': solution.problem,

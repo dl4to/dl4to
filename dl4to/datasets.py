@@ -165,7 +165,7 @@ class CSVConverter():
             pass
         else:
             if not os.path.exists(pt_dir_path):
-                os.mkdir(pt_dir_path)
+                os.makedirs(pt_dir_path)
 
         iters = range(len(self))
         if self.verbose:
@@ -804,13 +804,13 @@ class CSVDataset(TopoDataset):
 
     def _create_dirs(self, root, name):
         if not os.path.exists(root):
-            os.mkdir(root)
+            os.makedirs(root)
 
         if not os.path.exists(f'{root}/{name}'):
-            os.mkdir(f'{root}/{name}')
+            os.makedirs(f'{root}/{name}')
 
         if not os.path.exists(self.pt_dir_path):
-            os.mkdir(self.pt_dir_path)
+            os.makedirs(self.pt_dir_path)
 
 
     def _get_gz_file_paths_dict(self):

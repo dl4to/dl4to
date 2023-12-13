@@ -47,7 +47,7 @@ nb_path: "notebooks/solution/1_solution.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Solution" class="doc_header"><code>class</code> <code>Solution</code><a href="dl4to/solution.py#L106" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Solution</code>(<strong><code>problem</code></strong>:<code>dl4to.problem.Problem</code>, <strong><code>θ</code></strong>:<code>Tensor</code>, <strong><code>name</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>enforce_θ_on_Ω_design</code></strong>:<code>bool</code>=<em><code>True</code></em>)</p>
+<h2 id="Solution" class="doc_header"><code>class</code> <code>Solution</code><a href="dl4to/solution.py#L127" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Solution</code>(<strong><code>problem</code></strong>:<code>dl4to.problem.Problem</code>, <strong><code>θ</code></strong>:<code>Tensor</code>, <strong><code>name</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>enforce_θ_on_Ω_design</code></strong>:<code>bool</code>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>A class that defines solution objects.</p>
 <table>
@@ -120,7 +120,7 @@ nb_path: "notebooks/solution/1_solution.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Solution.get_θ" class="doc_header"><code>Solution.get_θ</code><a href="dl4to/solution.py#L193" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.get_θ</code>(<strong><code>binary</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
+<h4 id="Solution.get_θ" class="doc_header"><code>Solution.get_θ</code><a href="dl4to/solution.py#L214" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.get_θ</code>(<strong><code>binary</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Returns the density distribution <code>θ</code> from the solution object. Note that you can also obtain that density via <a href="/dl4tosolution.html#Solution.θ"><code>Solution.θ</code></a>, however this function has the option to return
 a binarized version of it.</p>
@@ -163,7 +163,7 @@ a binarized version of it.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Solution.clone" class="doc_header"><code>Solution.clone</code><a href="dl4to/solution.py#L207" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.clone</code>()</p>
+<h4 id="Solution.clone" class="doc_header"><code>Solution.clone</code><a href="dl4to/solution.py#L228" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.clone</code>()</p>
 </blockquote>
 <p>Returns a deepcopy of the Solution object.</p>
 
@@ -188,7 +188,7 @@ a binarized version of it.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Solution.detach" class="doc_header"><code>Solution.detach</code><a href="dl4to/solution.py#L217" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.detach</code>()</p>
+<h4 id="Solution.detach" class="doc_header"><code>Solution.detach</code><a href="dl4to/solution.py#L238" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.detach</code>()</p>
 </blockquote>
 <p>Returns a clone of the solution object that has a density θ which is detached from its computational graph.</p>
 
@@ -213,7 +213,7 @@ a binarized version of it.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Solution.detach_" class="doc_header"><code>Solution.detach_</code><a href="dl4to/solution.py#L226" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.detach_</code>()</p>
+<h4 id="Solution.detach_" class="doc_header"><code>Solution.detach_</code><a href="dl4to/solution.py#L247" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.detach_</code>()</p>
 </blockquote>
 <p>Detaches θ from its computational graph. This is an in-place version of the <code>detach()</code> method.</p>
 
@@ -238,7 +238,7 @@ a binarized version of it.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Solution.plot" class="doc_header"><code>Solution.plot</code><a href="dl4to/solution.py#L233" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.plot</code>(<strong><code>binary</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>solve_pde</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>normalize_σ_vm</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>threshold</code></strong>:<code>float</code>=<em><code>0.0</code></em>, <strong><code>display</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>file_path</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>camera_position</code></strong>:<code>tuple</code>=<em><code>(0, 0.1, 0.12)</code></em>, <strong><code>show_design_space</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>use_pyvista</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>window_size</code></strong>:<code>Union</code>[<code>tuple</code>, <code>list</code>]=<em><code>(800, 800)</code></em>, <strong><code>smooth_iters</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>show_colorbar</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>show_axislabels</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>show_ticklabels</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>export_png</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
+<h4 id="Solution.plot" class="doc_header"><code>Solution.plot</code><a href="dl4to/solution.py#L254" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.plot</code>(<strong><code>binary</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>solve_pde</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>normalize_σ_vm</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>threshold</code></strong>:<code>float</code>=<em><code>0.0</code></em>, <strong><code>display</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>file_path</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>camera_position</code></strong>:<code>tuple</code>=<em><code>(0, 0.1, 0.12)</code></em>, <strong><code>show_design_space</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>use_pyvista</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>window_size</code></strong>:<code>Union</code>[<code>tuple</code>, <code>list</code>]=<em><code>(800, 800)</code></em>, <strong><code>smooth_iters</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>show_colorbar</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>show_axislabels</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>show_ticklabels</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>export_png</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Renders a 3D figure that displays the density distribution and, optionally, additional ones that display the displacements and von Mises stresses for that density.</p>
 <table>
@@ -364,7 +364,7 @@ a binarized version of it.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Solution.solve_pde" class="doc_header"><code>Solution.solve_pde</code><a href="dl4to/solution.py#L274" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.solve_pde</code>(<strong><code>p</code></strong>:<code>float</code>=<em><code>1.0</code></em>, <strong><code>binary</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
+<h4 id="Solution.solve_pde" class="doc_header"><code>Solution.solve_pde</code><a href="dl4to/solution.py#L295" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.solve_pde</code>(<strong><code>p</code></strong>:<code>float</code>=<em><code>1.0</code></em>, <strong><code>binary</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Solves the PDE of linear elasticity for the current solution. Returns the displacement tensor, stress tensor and the von Mises stress tensor.</p>
 <table>
@@ -412,7 +412,7 @@ a binarized version of it.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Solution.eval" class="doc_header"><code>Solution.eval</code><a href="dl4to/solution.py#L315" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.eval</code>(<strong><code>criterion</code></strong>:<code>dl4to.criteria.Criterion</code>)</p>
+<h4 id="Solution.eval" class="doc_header"><code>Solution.eval</code><a href="dl4to/solution.py#L336" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.eval</code>(<strong><code>criterion</code></strong>:<code>dl4to.criteria.Criterion</code>)</p>
 </blockquote>
 <p>Evaluate the solution object with <code>criterion</code>. Only works for unsupervised criteria. Returns a <code>torch.Tensor</code>.</p>
 <table>
@@ -454,7 +454,7 @@ a binarized version of it.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Solution.__mul__" class="doc_header"><code>Solution.__mul__</code><a href="dl4to/solution.py#L336" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.__mul__</code>(<strong><code>λ</code></strong>:<code>float</code>)</p>
+<h4 id="Solution.__mul__" class="doc_header"><code>Solution.__mul__</code><a href="dl4to/solution.py#L357" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Solution.__mul__</code>(<strong><code>λ</code></strong>:<code>float</code>)</p>
 </blockquote>
 <p>Multiplication of a solution with a scalar returns a clone of the solution that has the original density distribution that is rescaled with <code>λ</code>. Returns a new <code>solution</code> object.</p>
 <table>

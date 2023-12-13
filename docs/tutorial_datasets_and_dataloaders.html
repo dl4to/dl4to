@@ -268,6 +268,7 @@ done!
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Plotting of the problem object explains why this dataset is called disc: The design space has the shape of a flat disc. Analogously, the design shape of the sphere datasets has the shape of a semi sphere.</p>
+<p>Note: Please change the argument <code>display</code> to <code>display=True</code> if you run the experiments on your machine.</p>
 
 </div>
 </div>
@@ -372,6 +373,15 @@ done!
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="https://dl4to.github.io/dl4to/images/2_pyvista_gt_solution.png" alt="pyvista_gt_solution"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note: It looks like pyvista has stopped support of the <code>pythreejs</code> backend that we use for the plotting. Please consider downgrading:
+<code>pip install pyvista==0.38.1</code></p>
+<p>It is possible that plotting using pyvista is still not working for you, as some users have recently pointed out. Unfortunately I have not yet found a fix for that, since it seems to be an issue on behalf of pyvista. Nonetheless, plotting using the aforementioned plotly backend should still work. If the problem occurs for you and you find any workaround or fix for this, I would be very grateful if you could let me know!</p>
 
 </div>
 </div>
