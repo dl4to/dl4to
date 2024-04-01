@@ -217,6 +217,10 @@ class SupervisedCriterion(Criterion):
 
 
     def _convert_to_list(self, solutions, gt_solutions):
+        if type(solutions) is tuple:
+            solutions = list(solutions)
+        if type(gt_solutions) is tuple:
+            gt_solutions = list(gt_solutions)
         if type(solutions) is not list:
             solutions = [solutions]
         if type(gt_solutions) is not list:
@@ -691,6 +695,8 @@ class UnsupervisedCriterion(Criterion):
 
 
     def _convert_to_list(self, solutions):
+        if type(solutions) is tuple:
+            solutions = list(solutions)
         if type(solutions) is not list:
             solutions = [solutions]
         return solutions
