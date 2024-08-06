@@ -166,7 +166,8 @@ class Problem:
         pde_solver:"dl4to.pde.PDESolver"=None, # A dl4to PDE Solver object that is attached to this problem.
         name:str=None, # The name of the problem
         device:str='cpu', # The device that this problem is to be stored on. Possible options are "cpu" and "cuda".
-        dtype:torch.dtype=torch.float32 # The datatype of the problem.
+        dtype:torch.dtype=torch.float32, # The datatype of the problem.
+        restrict_density_for_voxels_with_applied_forces:bool=True # Determines whether Ω_design should be set to "1" for voxels that have forces applied to them. Should be turned of in case of volumetric forces like gravity that are applied to all voxels.
     ):
         self._dtype = dtype
         self._device = device
@@ -181,8 +182,9 @@ class Problem:
         self._F = F.type(dtype).to(device)
         self._shape = self.Ω_design.shape[-3:]
         self._size = (torch.tensor(self.shape) * self.h).tolist()
-        F_mask = (self.F != 0).sum(dim=0, keepdim=True).bool()
-        self._Ω_design[F_mask] = 1.
+        if restrict_density_for_voxels_with_applied_forces:
+            F_mask = (self.F != 0).sum(dim=0, keepdim=True).bool()
+            self._Ω_design[F_mask] = 1.
         self._name = name
         self.trivial_solution = TrivialSolver()(self)
         self.pde_solver = pde_solver

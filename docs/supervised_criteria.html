@@ -114,7 +114,7 @@ nb_path: "notebooks/criteria/1_supervised_criteria.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="SupervisedCriterion.__call__" class="doc_header"><code>SupervisedCriterion.__call__</code><a href="dl4to/criteria.py#L270" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>SupervisedCriterion.__call__</code>(<strong><code>solutions</code></strong>:<code>list</code>, <strong><code>gt_solutions</code></strong>:<code>list</code>=<em><code>None</code></em>, <strong><code>binary</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
+<h4 id="SupervisedCriterion.__call__" class="doc_header"><code>SupervisedCriterion.__call__</code><a href="dl4to/criteria.py#L274" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>SupervisedCriterion.__call__</code>(<strong><code>solutions</code></strong>:<code>list</code>, <strong><code>gt_solutions</code></strong>:<code>list</code>=<em><code>None</code></em>, <strong><code>binary</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Calculates the output of the criterion for all solutions.</p>
 <table>
@@ -168,7 +168,7 @@ nb_path: "notebooks/criteria/1_supervised_criteria.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="WeightedBCE" class="doc_header"><code>class</code> <code>WeightedBCE</code><a href="dl4to/criteria.py#L281" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>WeightedBCE</code>(<strong><code>weight</code></strong>:<code>float</code>=<em><code>0.5</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
+<h2 id="WeightedBCE" class="doc_header"><code>class</code> <code>WeightedBCE</code><a href="dl4to/criteria.py#L285" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>WeightedBCE</code>(<strong><code>weight</code></strong>:<code>float</code>=<em><code>0.5</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
 </blockquote>
 <p>Weighted Binary cross entropy [1] is a variant of binary cross entropy variant. The weight value can be used to tune false negatives and false positives.
 E.g; If you want to reduce the number of false negatives then set weight &gt; 1, similarly to decrease the number of false positives, set weight &lt; 1.
@@ -225,7 +225,7 @@ The criterion reaches its best value at 0 and higher values correspond to worse 
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="WeightedBCE.set_optimal_weight" class="doc_header"><code>WeightedBCE.set_optimal_weight</code><a href="dl4to/criteria.py#L298" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>WeightedBCE.set_optimal_weight</code>(<strong><code>dataset</code></strong>:<code>dl4to.dataset.TopoDataset</code>, <strong><code>binary</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
+<h4 id="WeightedBCE.set_optimal_weight" class="doc_header"><code>WeightedBCE.set_optimal_weight</code><a href="dl4to/criteria.py#L302" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>WeightedBCE.set_optimal_weight</code>(<strong><code>dataset</code></strong>:<code>dl4to.dataset.TopoDataset</code>, <strong><code>binary</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Calculates the optimal BCE weight based on the solutions in the dataset.</p>
 <table>
@@ -273,7 +273,7 @@ The criterion reaches its best value at 0 and higher values correspond to worse 
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="WeightedFocal" class="doc_header"><code>class</code> <code>WeightedFocal</code><a href="dl4to/criteria.py#L335" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>WeightedFocal</code>(<strong><code>weight</code></strong>:<code>float</code>=<em><code>0.5</code></em>, <strong><code>γ</code></strong>:<code>float</code>=<em><code>3</code></em>, <strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
+<h2 id="WeightedFocal" class="doc_header"><code>class</code> <code>WeightedFocal</code><a href="dl4to/criteria.py#L339" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>WeightedFocal</code>(<strong><code>weight</code></strong>:<code>float</code>=<em><code>0.5</code></em>, <strong><code>γ</code></strong>:<code>float</code>=<em><code>3</code></em>, <strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
 </blockquote>
 <p>Focal loss [2] can be seen as variation of Binary Cross-Entropy. It down-weights the contribution of easy examples and enables the model to focus more on learning hard examples.
 It works well for highly imbalanced class scenarios. The criterion reaches its best value at 0 and higher values correspond to worse scores.</p>
@@ -341,7 +341,7 @@ It works well for highly imbalanced class scenarios. The criterion reaches its b
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="WeightedFocal.set_optimal_weight" class="doc_header"><code>WeightedFocal.set_optimal_weight</code><a href="dl4to/criteria.py#L355" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>WeightedFocal.set_optimal_weight</code>(<strong><code>dataset</code></strong>:<code>dl4to.dataset.TopoDataset</code>, <strong><code>binary</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
+<h4 id="WeightedFocal.set_optimal_weight" class="doc_header"><code>WeightedFocal.set_optimal_weight</code><a href="dl4to/criteria.py#L359" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>WeightedFocal.set_optimal_weight</code>(<strong><code>dataset</code></strong>:<code>dl4to.dataset.TopoDataset</code>, <strong><code>binary</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Calculates the optimal BCE weight based on the solutions in the dataset.</p>
 <table>
@@ -389,7 +389,7 @@ It works well for highly imbalanced class scenarios. The criterion reaches its b
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Dice" class="doc_header"><code>class</code> <code>Dice</code><a href="dl4to/criteria.py#L395" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Dice</code>(<strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
+<h2 id="Dice" class="doc_header"><code>class</code> <code>Dice</code><a href="dl4to/criteria.py#L399" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Dice</code>(<strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
 </blockquote>
 <p>The Dice coefficient is widely used metric in computer vision community to calculate the similarity between two images.
 Later in 2016, it has also been adapted as loss function known as Dice Loss [3]. It is also sometimes refered to as the F1 score [4].
@@ -446,7 +446,7 @@ Dice reaches its best value at 0 and its worst value at 1.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Tversky" class="doc_header"><code>class</code> <code>Tversky</code><a href="dl4to/criteria.py#L434" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Tversky</code>(<strong><code>α</code></strong>:<code>float</code>=<em><code>0.5</code></em>, <strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
+<h2 id="Tversky" class="doc_header"><code>class</code> <code>Tversky</code><a href="dl4to/criteria.py#L438" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Tversky</code>(<strong><code>α</code></strong>:<code>float</code>=<em><code>0.5</code></em>, <strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
 </blockquote>
 <p>Tversky index [5] can be seen as a generalization of the Dice coefficient. It adds a weight to false positives and false negatives. By setting the value of α &gt; 0.5, we can penalise false negatives more.
 This becomes useful in highly imbalanced datasets where the additional level of control over the loss function yields better small scale segmentations than the normal dice coefficient.
@@ -509,7 +509,7 @@ Just like dice, this criterion reaches its best value at 0 and its worst value a
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="FocalTversky" class="doc_header"><code>class</code> <code>FocalTversky</code><a href="dl4to/criteria.py#L476" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>FocalTversky</code>(<strong><code>α</code></strong>:<code>float</code>=<em><code>0.5</code></em>, <strong><code>γ</code></strong>:<code>float</code>=<em><code>3</code></em>, <strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
+<h2 id="FocalTversky" class="doc_header"><code>class</code> <code>FocalTversky</code><a href="dl4to/criteria.py#L480" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>FocalTversky</code>(<strong><code>α</code></strong>:<code>float</code>=<em><code>0.5</code></em>, <strong><code>γ</code></strong>:<code>float</code>=<em><code>3</code></em>, <strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
 </blockquote>
 <p>The Focal Tversky Loss [6] is a generalisation of the Tversky loss. The non-linear nature of the loss gives control over how the loss behaves at different values of the Tversky index obtained.
 Similar to Focal Loss, which focuses on hard examples by down-weighting easy ones. Focal Tversky loss  also attempts to learn hard-examples such with the help of γ, which controls the non-linearity of the loss.
@@ -578,7 +578,7 @@ This criterion reaches its best value at 0, while higher values correspond to wo
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="IoU" class="doc_header"><code>class</code> <code>IoU</code><a href="dl4to/criteria.py#L520" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>IoU</code>(<strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
+<h2 id="IoU" class="doc_header"><code>class</code> <code>IoU</code><a href="dl4to/criteria.py#L524" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>IoU</code>(<strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
 </blockquote>
 <p>The Intersection over Union (IoU) metric, also referred to as the Jaccard index, is essentially a method to quantify the percent overlap between the target mask and our prediction output. This metric is closely related to the Dice coefficient which is often used as a loss function during training.
 The IoU metric measures the number of pixels common between the target and prediction masks divided by the total number of pixels present across both masks.
@@ -635,7 +635,7 @@ IoU reaches its best value at 1 and its worst value at 0, i.e., higher values ar
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="VoxelAccuracy" class="doc_header"><code>class</code> <code>VoxelAccuracy</code><a href="dl4to/criteria.py#L559" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>VoxelAccuracy</code>(<strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
+<h2 id="VoxelAccuracy" class="doc_header"><code>class</code> <code>VoxelAccuracy</code><a href="dl4to/criteria.py#L563" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>VoxelAccuracy</code>(<strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
 </blockquote>
 <p>The voxel accuracy loss is a three-dimensional version of the pixel accuracy loss [7]. It reports the percent of voxels which are correctly classified. This metric can sometimes provide misleading results when the class representation is small within the image, as the measure will be biased in mainly reporting how well you identify negative case (ie. where the class is not present).
 Voxel accuracy reaches its best value at 1 and its worst value at 0, i.e., higher values are better.</p>
@@ -691,7 +691,7 @@ Voxel accuracy reaches its best value at 1 and its worst value at 0, i.e., highe
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="BalancedVoxelAccuracy" class="doc_header"><code>class</code> <code>BalancedVoxelAccuracy</code><a href="dl4to/criteria.py#L597" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>BalancedVoxelAccuracy</code>(<strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
+<h2 id="BalancedVoxelAccuracy" class="doc_header"><code>class</code> <code>BalancedVoxelAccuracy</code><a href="dl4to/criteria.py#L601" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>BalancedVoxelAccuracy</code>(<strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
 </blockquote>
 <p>The balanced voxel accuracy loss [9] is a balanced version of the voxel accuracy criterion and can also be interpreted as a rescaled version of the "Youden index" [10]. That makes it a better metric to use with imbalanced data. It is defined as the average of recall obtained on each class.
 The criterion reaches its best value at 1 and its worst value at 0, i.e., higher values are better.</p>
@@ -747,7 +747,7 @@ The criterion reaches its best value at 1 and its worst value at 0, i.e., higher
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="L2Accuracy" class="doc_header"><code>class</code> <code>L2Accuracy</code><a href="dl4to/criteria.py#L632" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>L2Accuracy</code>(<strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
+<h2 id="L2Accuracy" class="doc_header"><code>class</code> <code>L2Accuracy</code><a href="dl4to/criteria.py#L636" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>L2Accuracy</code>(<strong><code>ε</code></strong>:<code>float</code>=<em><code>1e-06</code></em>, <strong><code>compute_only_on_design_space</code></strong>:<code>bool</code>=<em><code>True</code></em>) :: <a href="/dl4tosupervised_criteria.html#SupervisedCriterion"><code>SupervisedCriterion</code></a></p>
 </blockquote>
 <p>The L2 accuracy loss [8] reports the root mean squared accuracy of the predictions. The criterion reaches its best value at 1 and its worst value at 0, i.e., higher values are better.</p>
 <table>
