@@ -9,7 +9,7 @@ import torch
 import numpy as np
 import pandas as pd
 import warnings
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 
 from .problem import Problem
 from .solution import Solution
@@ -191,7 +191,7 @@ import os
 import torch
 from torch.utils.data import Dataset
 from torch.utils.data import random_split
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 import warnings
 import random
 from typing import Union

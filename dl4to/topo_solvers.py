@@ -590,7 +590,7 @@ class SIMPIterator:
 # Cell
 import torch
 import numpy as np
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 
 from .topo_solvers import TopoSolver, SIMPIterator
 from .density_representers import FilteringDensityRepresenter
