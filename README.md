@@ -58,6 +58,10 @@ To learn the functionality and usage of DL4TO we recommend to have a look at the
 - [Tutorial: Understand the structure of DL4TO](https://dl4to.github.io/dl4to/tutorial_overview.html)
 - [Documentation](https://dl4to.github.io/dl4to/) 
 
+For a comprehensive introduction to topology optimization and its applications in deep learning, refer to the dissertation of David Erzmann titled ["Equivariant deep learning for 3D topology optimization"](https://media.suub.uni-bremen.de/handle/elib/8405).
+
+If you use any of these resources, please remember to cite them!
+
 # Installation
 
 DL4TO can be installed by using:
