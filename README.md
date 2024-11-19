@@ -58,7 +58,7 @@ To learn the functionality and usage of DL4TO we recommend to have a look at the
 - [Tutorial: Understand the structure of DL4TO](https://dl4to.github.io/dl4to/tutorial_overview.html)
 - [Documentation](https://dl4to.github.io/dl4to/) 
 
-For a comprehensive introduction to topology optimization and its applications in deep learning, refer to the dissertation of David Erzmann titled ["Equivariant deep learning for 3D topology optimization"](https://media.suub.uni-bremen.de/handle/elib/8405).
+For a comprehensive introduction to topology optimization and its applications in deep learning, refer to the dissertation of David Erzmann titled ["Equivariant deep learning for 3D topology optimization"](https://doi.org/10.26092/elib/3439) [4].
 
 If you use any of these resources, please remember to cite them!
 
@@ -103,3 +103,5 @@ DL4TO uses an Apache License, see the [LICENSE](LICENSE) file.
 [2] Erzmann, David, et al. "DL4TO : A Deep Learning Library for Sample-Efficient Topology Optimization". Springer. https://doi.org/10.1007/978-3-031-38271-0_54 (2023)
 
 [3] Dittmer, Sören, et al. "SELTO Dataset". Zenodo. https://doi.org/10.5281/zenodo.7781392 (2023)
+
+[4] Erzmann, David. "Equivariant deep learning for 3D topology optimization". Diss. Universität Bremen. https://doi.org/10.26092/elib/3439 (2024)
